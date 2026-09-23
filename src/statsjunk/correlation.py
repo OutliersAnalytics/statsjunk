@@ -4,6 +4,8 @@ import numpy as np
 from pydantic import BaseModel, Field
 from scipy import stats
 
+from .fisher import fisher_z_ci
+
 
 class CorrelationResult(BaseModel):
     r: float = Field(ge=-1, le=1)
@@ -122,10 +124,6 @@ def compute_pearson_from_summary(
     t_stat = r * np.sqrt(df / (1 - r**2))
     pvalue = float(2 * stats.t.sf(abs(t_stat), df))
 
-    z = np.arctanh(r)
-    se = 1 / np.sqrt(n - 3)
-    z_crit = stats.norm.ppf(0.5 + ci / 2)
-    low = float(np.tanh(z - z_crit * se))
-    high = float(np.tanh(z + z_crit * se))
+    low, high = fisher_z_ci(r, n, ci)
 
     return CorrelationResult(r=r, pvalue=pvalue, low=low, high=high)
