@@ -29,8 +29,9 @@ re-exported from the top-level `statsjunk` package, so `from statsjunk import co
 always works regardless of where a function actually lives.
 
 - `correlation` — `pearson`: Pearson correlation, with confidence intervals, and a
-  summary-statistics variant (`r`, `n`) for when the raw arrays aren't available. `fisher`: the
-  Fisher z-transformation used internally by `pearson`, also usable standalone.
+  summary-statistics variant (`r`, `n`) for when the raw arrays aren't available. `spearman`: rank
+  correlation, for monotonic-but-not-linear relationships or data with outliers. `fisher`: the
+  Fisher z-transformation used internally by both, also usable standalone.
 - `regression` — `simple`: simple linear regression with slope diagnostics. `multiple`: ordinary
   least squares multiple linear regression, with standardized coefficients and variance inflation
   factors.
