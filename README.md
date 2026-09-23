@@ -31,8 +31,10 @@ print(result.r, result.pvalue)
   coefficients and variance inflation factors.
 - `spatial` — global Moran's I spatial autocorrelation.
 - `elections` — Laakso-Taagepera effective number of parties/candidates.
-- `samplesize` *(planned)* — a Python port of [`pmsampsize`](https://cran.r-project.org/package=pmsampsize),
-  for minimum sample size calculations in prediction model studies.
+- `fisher` — Fisher z-transformation, used internally by `correlation` and available standalone.
+- `samplesize` — a Python port of [`pmsampsize`](https://cran.r-project.org/package=pmsampsize), for
+  minimum sample size calculations when developing continuous, binary, or survival outcome prediction
+  models (Riley et al. 2019, 2020).
 
 ## Developing
 
