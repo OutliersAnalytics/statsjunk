@@ -1,0 +1,38 @@
+[project]
+name = "statsjunk"
+version = "0.1.0"
+description = "A collection of statistical odds and ends."
+readme = "README.md"
+license = "MIT"
+authors = [{ name = "Gustavo Furtado" }]
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=2.0",
+    "pydantic>=2.11.7",
+    "scipy>=1.14",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.urls]
+Homepage = "https://github.com/OutliersAnalytics/statsjunk"
+Repository = "https://github.com/OutliersAnalytics/statsjunk"
+Issues = "https://github.com/OutliersAnalytics/statsjunk/issues"
+
+[dependency-groups]
+dev = [
+    "pytest-cov>=7.0.0",
+    "ruff>=0.15.13",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/statsjunk"]
