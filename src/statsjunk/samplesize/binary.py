@@ -99,6 +99,18 @@ def compute_pmsampsize_binary(
 ) -> BinarySampleSizeResult:
     """Minimum sample size for developing a binary outcome prediction model.
 
+    What this solves
+    -----------------
+    Before collecting data to build a prediction model for a yes/no outcome
+    (e.g. "will this patient be readmitted?"), you need to know how many
+    subjects to enroll. Too few, and the model will overfit — look accurate
+    on the data it was built on, then perform much worse on new patients.
+    This calculates the minimum sample size needed to avoid that, based on
+    how many candidate predictors you plan to consider and how well you
+    expect the model to perform (which you provide via a rough estimate from
+    a previous study — `csrsquared`, `nagrsquared`, or `cstatistic`, any one
+    of which works; you don't need to understand the difference to use one).
+
     Implements the criteria of Riley et al. 2019 ("Minimum sample size
     required for developing a multivariable prediction model: Part II binary
     and time-to-event outcomes"):
@@ -153,6 +165,17 @@ def compute_pmsampsize_binary(
         - the resulting csrsquared is <= 0, >= 1, or exceeds the maximum
           Cox-Snell R^2 attainable at this prevalence
         - shrinkage is lower than csrsquared
+
+    References
+    ----------
+    - Riley, R.D., Snell, K.I.E., Ensor, J., Burke, D.L., Harrell, F.E. Jr,
+      Moons, K.G., & Collins, G.S. (2019). "Minimum sample size required for
+      developing a multivariable prediction model: Part II binary and
+      time-to-event outcomes." Statistics in Medicine, 38(7), 1276-1296.
+    - Riley, R.D., Van Calster, B., & Collins, G.S. (2020). "A note on
+      estimating the Cox-Snell R2 from a reported C statistic (AUROC) to
+      inform sample size calculations for developing a prediction model
+      with a binary outcome." Statistics in Medicine, 40(4), 859-864.
 
     """
     if parameters < 1:

@@ -15,6 +15,17 @@ class FragmentationResult(BaseModel):
 def compute_laakso_taagepera(votes: Sequence[float]) -> FragmentationResult:
     """Laakso-Taagepera effective number of options for a vote distribution.
 
+    What this solves
+    -----------------
+    "How many parties/candidates does this election really have?" is a
+    surprisingly tricky question — counting every name on the ballot
+    overstates it if most votes go to just one or two of them. This gives a
+    single number that answers the practical version of that question: it's
+    close to 1 when one option dominates, and approaches the raw count of
+    options only when the vote is split evenly between them. It's a standard
+    way to compare how fragmented or concentrated the vote is across
+    different elections, districts, or time periods.
+
     ``N = 1 / Σ pᵢ²`` where ``pᵢ`` is option ``i``'s share of the total. It is
     ``1`` when a single option takes every vote and approaches the number of
     options as the vote splits evenly — a fragmentation / dispersion measure.
@@ -39,6 +50,12 @@ def compute_laakso_taagepera(votes: Sequence[float]) -> FragmentationResult:
         - no options are provided
         - any vote count is negative
         - the votes sum to zero
+
+    References
+    ----------
+    - Laakso, M. & Taagepera, R. (1979). "'Effective' Number of Parties: A
+      Measure with Application to West Europe." Comparative Political
+      Studies, 12(1), 3-27.
 
     """
     votes = np.asarray(votes, dtype=float)

@@ -24,10 +24,19 @@ def compute_morans_i(
 ) -> MoransIResult:
     """Global Moran's I with k-nearest-neighbour spatial weights.
 
-    Answers "are nearby regions more alike than distant ones?" — used as a
-    caveat on a bivariate correlation, since strong spatial autocorrelation
-    means the observations are not independent and the correlation's
-    effective sample size is smaller than n.
+    What this solves
+    -----------------
+    You have a measurement for each of several geographic regions (e.g.
+    average income per municipality) and want to know whether nearby
+    regions tend to have similar values, or whether the pattern looks
+    random across the map. This answers "are nearby regions more alike than
+    distant ones?" with a single statistic (positive means yes, clustered;
+    negative means neighbours tend to differ, like a checkerboard) and a
+    p-value for whether that pattern is stronger than chance. It's also
+    useful as a caveat on a correlation computed across the same regions:
+    strong spatial clustering means the regions aren't truly independent
+    observations, so that correlation's real precision is lower than it
+    looks.
 
     Parameters
     ----------
@@ -60,6 +69,11 @@ def compute_morans_i(
         - permutations < 99
         - fewer than k + 1 regions are provided
         - values is constant
+
+    References
+    ----------
+    - Moran, P.A.P. (1950). "Notes on Continuous Stochastic Phenomena."
+      Biometrika, 37(1/2), 17-23.
 
     """
     values = np.asarray(values, dtype=float)

@@ -68,6 +68,17 @@ def compute_multiple_regression(
 ) -> MultipleRegressionResult:
     """Fit a multiple linear regression by ordinary least squares.
 
+    What this solves
+    -----------------
+    You have several variables you think together predict or explain an
+    outcome (e.g. education, experience, and age predicting salary), and
+    want to know each one's individual effect while accounting for the
+    others. This fits the best-fitting linear combination, reports each
+    predictor's effect size, standard error, and significance, and flags
+    predictors that are too similar to each other to separate reliably
+    (`vif`, variance inflation factor — a large value there is a warning
+    sign that two or more of your predictors carry redundant information).
+
     Parameters
     ----------
     x : Sequence[Sequence[float]]
@@ -100,6 +111,14 @@ def compute_multiple_regression(
         - y or any regressor column is constant
         - the regressors are collinear (design matrix not full rank)
         - names is given with the wrong length
+
+    References
+    ----------
+    - Draper, N.R. & Smith, H. (1998). Applied Regression Analysis (3rd
+      ed.). Wiley.
+    - Marquardt, D.W. (1970). "Generalized Inverses, Ridge Regression,
+      Biased Linear Estimation, and Nonlinear Estimation." Technometrics,
+      12(3), 591-612. (variance inflation factor)
 
     """
     x = np.asarray(x, dtype=float)
@@ -179,7 +198,7 @@ def compute_multiple_regression(
 
     coefficients = [
         Coefficient(
-            name="(intercepto)",
+            name="(intercept)",
             coef=float(beta[0]),
             coef_std=None,
             std_error=float(std_errors[0]),

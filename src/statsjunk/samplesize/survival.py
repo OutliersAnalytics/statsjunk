@@ -53,6 +53,18 @@ def compute_pmsampsize_survival(
 ) -> SurvivalSampleSizeResult:
     """Minimum sample size for developing a survival outcome prediction model.
 
+    What this solves
+    -----------------
+    Before collecting data to build a prediction model for a time-to-event
+    outcome (e.g. "how long until a patient relapses?"), you need to know
+    how many subjects — and how many observed events — to plan for. Too
+    few, and the model will overfit — look accurate on the data it was
+    built on, then perform much worse on new subjects. This calculates the
+    minimum sample size needed to avoid that, based on how many candidate
+    predictors you plan to consider, the event rate and follow-up time
+    you expect, and a rough estimate of how well the model should perform
+    (from a previous study in the same area).
+
     Implements the criteria of Riley et al. 2019 ("Minimum sample size
     required for developing a multivariable prediction model: Part II binary
     and time-to-event outcomes"), analogous to the binary case but based on
@@ -94,6 +106,13 @@ def compute_pmsampsize_survival(
         - the resulting csrsquared is <= 0, >= 1, or exceeds the maximum
           Cox-Snell R^2 attainable at this rate/follow-up
         - shrinkage is lower than csrsquared
+
+    References
+    ----------
+    - Riley, R.D., Snell, K.I.E., Ensor, J., Burke, D.L., Harrell, F.E. Jr,
+      Moons, K.G., & Collins, G.S. (2019). "Minimum sample size required for
+      developing a multivariable prediction model: Part II binary and
+      time-to-event outcomes." Statistics in Medicine, 38(7), 1276-1296.
 
     """
     if parameters < 1:

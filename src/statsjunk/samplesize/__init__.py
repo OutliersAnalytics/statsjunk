@@ -31,30 +31,36 @@ __all__ = [
 class PMSampleSize(BaseModel):
     """Minimum sample size for developing a multivariable prediction model.
 
-    A single entry point over `compute_pmsampsize_binary`,
-    `compute_pmsampsize_continuous`, and `compute_pmsampsize_survival`,
-    dispatching on `outcome_type`. Prefer calling those functions directly —
-    this class exists for parity with the R `pmsampsize` package's
-    single-function ergonomics.
+    What this solves
+    -----------------
+    Before collecting data to build any prediction model — continuous,
+    binary, or time-to-event — you need to know how many subjects to
+    enroll. Too few, and the model will overfit — look accurate on the data
+    it was built on, then perform much worse in practice. This is a single
+    entry point that dispatches to the right calculation for your outcome
+    type. Prefer calling `compute_pmsampsize_binary`,
+    `compute_pmsampsize_continuous`, or `compute_pmsampsize_survival`
+    directly — this class exists for parity with the R `pmsampsize`
+    package's single-function ergonomics.
 
-    Implements the criteria proposed by Riley et al. 2018/2019 for minimum
+    Implements the criteria proposed by Riley et al. 2019/2020 for minimum
     sample size when developing a new multivariable prediction model, for
     continuous, binary, or survival (time-to-event) outcomes.
 
     References
     ----------
-    - Riley RD, Snell KIE, Ensor J, Burke DL, Harrell FE Jr, Moons KG,
-      Collins GS. Minimum sample size required for developing a
-      multivariable prediction model: Part I continuous outcomes.
-      Statistics in Medicine. 2019.
-    - Riley RD, Snell KIE, Ensor J, Burke DL, Harrell FE Jr, Moons KG,
-      Collins GS. Minimum sample size required for developing a
-      multivariable prediction model: Part II binary and time-to-event
-      outcomes. Statistics in Medicine. 2019.
-    - Riley RD, Van Calster B, Collins GS. A note on estimating the Cox-Snell
-      R^2 from a reported C statistic (AUROC) to inform sample size
-      calculations for developing a prediction model with a binary outcome.
-      Statistics in Medicine. 2020.
+    - Riley, R.D., Snell, K.I.E., Ensor, J., Burke, D.L., Harrell, F.E. Jr,
+      Moons, K.G., & Collins, G.S. (2019). "Minimum sample size required for
+      developing a multivariable prediction model: Part I continuous
+      outcomes." Statistics in Medicine, 38(7), 1262-1275.
+    - Riley, R.D., Snell, K.I.E., Ensor, J., Burke, D.L., Harrell, F.E. Jr,
+      Moons, K.G., & Collins, G.S. (2019). "Minimum sample size required for
+      developing a multivariable prediction model: Part II binary and
+      time-to-event outcomes." Statistics in Medicine, 38(7), 1276-1296.
+    - Riley, R.D., Van Calster, B., & Collins, G.S. (2020). "A note on
+      estimating the Cox-Snell R2 from a reported C statistic (AUROC) to
+      inform sample size calculations for developing a prediction model
+      with a binary outcome." Statistics in Medicine, 40(4), 859-864.
 
     """
 

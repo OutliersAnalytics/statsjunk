@@ -17,7 +17,7 @@ def test_recovers_known_coefficients():
     result = compute_multiple_regression(list(zip(x1, x2)), y, names=["x1", "x2"])
     coefs = _named(result)
 
-    assert coefs["(intercepto)"].coef == pytest.approx(1.0)
+    assert coefs["(intercept)"].coef == pytest.approx(1.0)
     assert coefs["x1"].coef == pytest.approx(2.0)
     assert coefs["x2"].coef == pytest.approx(-3.0)
     assert result.n == 6
@@ -82,7 +82,7 @@ def test_standardized_coefficient_is_comparable_across_scales():
 
     assert abs(coefs["small"].coef) > 100 * abs(coefs["large"].coef)
     assert coefs["small"].coef_std == pytest.approx(coefs["large"].coef_std, rel=0.1)
-    assert coefs["(intercepto)"].coef_std is None
+    assert coefs["(intercept)"].coef_std is None
 
 
 def test_vif_flags_correlated_regressors():
@@ -101,7 +101,7 @@ def test_vif_flags_correlated_regressors():
     assert coefs["x1"].vif > 10
     assert coefs["x2"].vif > 10
     assert coefs["x3"].vif < 5
-    assert coefs["(intercepto)"].vif is None
+    assert coefs["(intercept)"].vif is None
 
 
 def test_single_regressor_has_vif_one():

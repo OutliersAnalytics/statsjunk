@@ -8,6 +8,8 @@ from .fisher import fisher_z_ci
 
 
 class CorrelationResult(BaseModel):
+    """Pearson correlation coefficient, its p-value, and confidence interval."""
+
     r: float = Field(ge=-1, le=1)
     pvalue: float = Field(ge=0, le=1)
     low: float = Field(ge=-1, le=1)
@@ -20,6 +22,18 @@ def compute_pearson_correlation(
     ci: float = 0.95,
 ) -> CorrelationResult:
     """Compute Pearson's correlation coefficient and its confidence interval.
+
+    What this solves
+    -----------------
+    You have two lists of numbers measured on the same subjects (e.g. hours
+    studied and exam score for a group of students) and want to know how
+    strongly they move together — and whether that relationship is likely
+    real or could just be noise. This returns a single number from -1
+    (perfectly opposite) to +1 (perfectly together), a p-value for whether
+    that number is distinguishable from "no relationship", and a range of
+    plausible values for the true correlation. You don't need to know how
+    the p-value or interval are derived — just that a small p-value and a
+    narrow interval far from zero both mean the relationship is trustworthy.
 
     Parameters
     ----------
@@ -44,6 +58,14 @@ def compute_pearson_correlation(
         - fewer than 4 observations are provided
         - ci is not in (0, 1)
         - either input is constant
+
+    References
+    ----------
+    - Pearson, K. (1895). "Note on regression and inheritance in the case of
+      two parents." Proceedings of the Royal Society of London, 58, 240-242.
+    - Fisher, R.A. (1915). "Frequency distribution of the values of the
+      correlation coefficient in samples of an indefinitely large
+      population." Biometrika, 10(4), 507-521.
 
     """
     x = np.asarray(x, dtype=float)
@@ -83,10 +105,16 @@ def compute_pearson_from_summary(
     """Derive a Pearson correlation's p-value and confidence interval from
     summary statistics (r, n) alone, without the underlying arrays.
 
-    For callers that already computed r elsewhere over many groups in one
-    pass (e.g. a SQL `corr()` aggregate grouped by category) and would
-    otherwise have to re-fetch every group's raw per-observation arrays just
-    to get significance out of `compute_pearson_correlation`.
+    What this solves
+    -----------------
+    Sometimes you already know a correlation coefficient and how many
+    observations it was computed from — say, from a report, a previous
+    study, or a database aggregate — but don't have (or don't want to
+    re-fetch) the original raw data. Recomputing the p-value and confidence
+    interval from `r` and `n` alone gives the same answer `compute_pearson_correlation`
+    would have given on the original data, without needing that data at all —
+    for example, a SQL `corr()` aggregate grouped by category, where you get
+    `r` and `n` per group but not the underlying rows.
 
     Parameters
     ----------
@@ -106,6 +134,12 @@ def compute_pearson_from_summary(
     ------
     ValueError
         If n < 4, r is outside [-1, 1], or ci is not in (0, 1).
+
+    References
+    ----------
+    - Fisher, R.A. (1915). "Frequency distribution of the values of the
+      correlation coefficient in samples of an indefinitely large
+      population." Biometrika, 10(4), 507-521.
 
     """
     if n < 4:

@@ -23,6 +23,16 @@ def compute_linear_regression(
 ) -> RegressionResult:
     """Fit a simple linear regression model and its slope diagnostics.
 
+    What this solves
+    -----------------
+    You have one variable you think predicts or explains another (e.g. years
+    of experience predicting salary), and want the straight line that best
+    fits the data, plus a sense of how reliable that line is. This fits the
+    best-fitting line, tells you how much of the variation in `y` it
+    explains (`r_squared`), and gives a confidence interval and p-value for
+    the slope — so you can judge whether the relationship is likely real
+    (slope clearly different from zero) or could just be noise.
+
     Parameters
     ----------
     x : Sequence[float]
@@ -49,6 +59,11 @@ def compute_linear_regression(
         - fewer than 3 observations are provided
         - ci is not in (0, 1)
         - either input is constant
+
+    References
+    ----------
+    - Draper, N.R. & Smith, H. (1998). Applied Regression Analysis (3rd
+      ed.). Wiley.
 
     """
     x = np.asarray(x, dtype=float)

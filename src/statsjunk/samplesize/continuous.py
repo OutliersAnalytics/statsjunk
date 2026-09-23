@@ -53,6 +53,17 @@ def compute_pmsampsize_continuous(
 ) -> ContinuousSampleSizeResult:
     """Minimum sample size for developing a continuous outcome prediction model.
 
+    What this solves
+    -----------------
+    Before collecting data to build a prediction model for a numeric outcome
+    (e.g. predicting blood pressure from a set of risk factors), you need to
+    know how many subjects to enroll. Too few, and the model will overfit —
+    look accurate on the data it was built on, then perform much worse on
+    new subjects. This calculates the minimum sample size needed to avoid
+    that, based on how many candidate predictors you plan to consider and
+    how well you expect the model to perform (a rough R^2 estimate from a
+    previous study is enough).
+
     Implements the criteria of Riley et al. 2018 ("Minimum sample size
     required for developing a multivariable prediction model: Part I
     continuous outcomes"):
@@ -101,6 +112,13 @@ def compute_pmsampsize_continuous(
         - intercept is zero
         - shrinkage is not in (0, 1]
         - mmoe is not greater than 1
+
+    References
+    ----------
+    - Riley, R.D., Snell, K.I.E., Ensor, J., Burke, D.L., Harrell, F.E. Jr,
+      Moons, K.G., & Collins, G.S. (2019). "Minimum sample size required for
+      developing a multivariable prediction model: Part I continuous
+      outcomes." Statistics in Medicine, 38(7), 1262-1275.
 
     """
     if parameters < 1:
