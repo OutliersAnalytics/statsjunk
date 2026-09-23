@@ -2,16 +2,16 @@ from typing import Literal
 
 from pydantic import BaseModel, model_validator
 
-from .binary import BinaryCriterion, BinarySampleSizeResult, compute_pmsampsize_binary
+from .binary import BinaryCriterion, BinarySampleSizeResult, compute_binary_sample_size
 from .continuous import (
     ContinuousCriterion,
     ContinuousSampleSizeResult,
-    compute_pmsampsize_continuous,
+    compute_continuous_sample_size,
 )
 from .survival import (
     SurvivalCriterion,
     SurvivalSampleSizeResult,
-    compute_pmsampsize_survival,
+    compute_survival_sample_size,
 )
 
 __all__ = [
@@ -22,9 +22,9 @@ __all__ = [
     "PMSampleSize",
     "SurvivalCriterion",
     "SurvivalSampleSizeResult",
-    "compute_pmsampsize_binary",
-    "compute_pmsampsize_continuous",
-    "compute_pmsampsize_survival",
+    "compute_binary_sample_size",
+    "compute_continuous_sample_size",
+    "compute_survival_sample_size",
 ]
 
 
@@ -38,8 +38,8 @@ class PMSampleSize(BaseModel):
     enroll. Too few, and the model will overfit — look accurate on the data
     it was built on, then perform much worse in practice. This is a single
     entry point that dispatches to the right calculation for your outcome
-    type. Prefer calling `compute_pmsampsize_binary`,
-    `compute_pmsampsize_continuous`, or `compute_pmsampsize_survival`
+    type. Prefer calling `compute_binary_sample_size`,
+    `compute_continuous_sample_size`, or `compute_survival_sample_size`
     directly — this class exists for parity with the R `pmsampsize`
     package's single-function ergonomics.
 
@@ -105,7 +105,7 @@ class PMSampleSize(BaseModel):
         self,
     ) -> BinarySampleSizeResult | ContinuousSampleSizeResult | SurvivalSampleSizeResult:
         if self.outcome_type == "continuous":
-            return compute_pmsampsize_continuous(
+            return compute_continuous_sample_size(
                 parameters=self.parameters,
                 rsquared=self.rsquared,
                 intercept=self.intercept,
@@ -114,7 +114,7 @@ class PMSampleSize(BaseModel):
                 mmoe=self.mmoe,
             )
         if self.outcome_type == "binary":
-            return compute_pmsampsize_binary(
+            return compute_binary_sample_size(
                 parameters=self.parameters,
                 prevalence=self.prevalence,
                 csrsquared=self.csrsquared,
@@ -123,7 +123,7 @@ class PMSampleSize(BaseModel):
                 shrinkage=self.shrinkage,
                 seed=self.seed,
             )
-        return compute_pmsampsize_survival(
+        return compute_survival_sample_size(
             parameters=self.parameters,
             rate=self.rate,
             timepoint=self.timepoint,

@@ -1,13 +1,13 @@
 import pytest
 
-from statsjunk.samplesize.survival import compute_pmsampsize_survival
+from statsjunk.samplesize.survival import compute_survival_sample_size
 
 
 def test_matches_riley_worked_example():
     """Riley et al. 2020 (BMJ) worked example: 30 parameters, Cox-Snell R^2
     of 0.051, event rate 0.065, 2.07 years mean follow-up, 2-year timepoint
     -> minimum n of 5143."""
-    result = compute_pmsampsize_survival(
+    result = compute_survival_sample_size(
         parameters=30, csrsquared=0.051, rate=0.065, timepoint=2, meanfup=2.07
     )
 
@@ -15,7 +15,7 @@ def test_matches_riley_worked_example():
 
 
 def test_small_example():
-    result = compute_pmsampsize_survival(
+    result = compute_survival_sample_size(
         parameters=5, csrsquared=0.1, rate=0.1, timepoint=5, meanfup=10, shrinkage=0.9
     )
 
@@ -23,10 +23,10 @@ def test_small_example():
 
 
 def test_nagrsquared_is_equivalent_to_its_csrsquared():
-    direct = compute_pmsampsize_survival(
+    direct = compute_survival_sample_size(
         parameters=30, csrsquared=0.051, rate=0.065, timepoint=2, meanfup=2.07
     )
-    from_nag = compute_pmsampsize_survival(
+    from_nag = compute_survival_sample_size(
         parameters=30,
         nagrsquared=direct.nagrsquared,
         rate=0.065,
@@ -39,7 +39,7 @@ def test_nagrsquared_is_equivalent_to_its_csrsquared():
 
 
 def test_risk_at_timepoint_is_between_bounds():
-    result = compute_pmsampsize_survival(
+    result = compute_survival_sample_size(
         parameters=30, csrsquared=0.051, rate=0.065, timepoint=2, meanfup=2.07
     )
 
@@ -48,21 +48,21 @@ def test_risk_at_timepoint_is_between_bounds():
 
 def test_raises_when_no_r2_source_given():
     with pytest.raises(ValueError, match="Exactly one of"):
-        compute_pmsampsize_survival(
+        compute_survival_sample_size(
             parameters=30, rate=0.065, timepoint=2, meanfup=2.07
         )
 
 
 def test_raises_for_non_positive_rate():
     with pytest.raises(ValueError, match="rate must be positive"):
-        compute_pmsampsize_survival(
+        compute_survival_sample_size(
             parameters=30, csrsquared=0.051, rate=0, timepoint=2, meanfup=2.07
         )
 
 
 def test_raises_when_csrsquared_exceeds_maximum():
     with pytest.raises(ValueError, match="maximum Cox-Snell"):
-        compute_pmsampsize_survival(
+        compute_survival_sample_size(
             parameters=30,
             csrsquared=0.99,
             rate=0.065,

@@ -9,9 +9,9 @@ from statsjunk.samplesize import (
 
 
 def test_continuous_dispatch_matches_function():
-    from statsjunk.samplesize.continuous import compute_pmsampsize_continuous
+    from statsjunk.samplesize.continuous import compute_continuous_sample_size
 
-    direct = compute_pmsampsize_continuous(
+    direct = compute_continuous_sample_size(
         parameters=25, rsquared=0.2, intercept=1.9, sd=0.6
     )
     via_class = PMSampleSize(
@@ -23,9 +23,9 @@ def test_continuous_dispatch_matches_function():
 
 
 def test_binary_dispatch_matches_function():
-    from statsjunk.samplesize.binary import compute_pmsampsize_binary
+    from statsjunk.samplesize.binary import compute_binary_sample_size
 
-    direct = compute_pmsampsize_binary(
+    direct = compute_binary_sample_size(
         parameters=24, prevalence=0.174, csrsquared=0.288
     )
     via_class = PMSampleSize(
@@ -37,9 +37,9 @@ def test_binary_dispatch_matches_function():
 
 
 def test_survival_dispatch_matches_function():
-    from statsjunk.samplesize.survival import compute_pmsampsize_survival
+    from statsjunk.samplesize.survival import compute_survival_sample_size
 
-    direct = compute_pmsampsize_survival(
+    direct = compute_survival_sample_size(
         parameters=30, csrsquared=0.051, rate=0.065, timepoint=2, meanfup=2.07
     )
     via_class = PMSampleSize(

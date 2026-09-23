@@ -88,7 +88,7 @@ def _csrsquared_from_cstatistic(
     return float(1 - np.exp((2 / n) * (loglik_null - loglik_full)))
 
 
-def compute_pmsampsize_binary(
+def compute_binary_sample_size(
     parameters: int,
     prevalence: float,
     csrsquared: float | None = None,

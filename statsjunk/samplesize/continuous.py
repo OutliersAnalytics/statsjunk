@@ -43,7 +43,7 @@ def _shrinkage_for_n(rsquared: float, parameters: int, n: int) -> float:
     )
 
 
-def compute_pmsampsize_continuous(
+def compute_continuous_sample_size(
     parameters: int,
     rsquared: float,
     intercept: float,

@@ -42,7 +42,7 @@ def _max_csrsquared(rate: float, meanfup: float) -> float:
     return float(1 - np.exp(2 * ln_l_null_percapita))
 
 
-def compute_pmsampsize_survival(
+def compute_survival_sample_size(
     parameters: int,
     rate: float,
     timepoint: float,
@@ -84,7 +84,7 @@ def compute_pmsampsize_survival(
         dataset, same time units as `timepoint`.
     csrsquared, nagrsquared : float, optional
         Exactly one must be given, as the anticipated Cox-Snell or
-        Nagelkerke's R^2 of the new model — see `binary.compute_pmsampsize_binary`
+        Nagelkerke's R^2 of the new model — see `binary.compute_binary_sample_size`
         for how these relate.
     shrinkage : float, default=0.9
         Target shrinkage factor at internal validation, in (0, 1].
