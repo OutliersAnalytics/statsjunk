@@ -1,6 +1,6 @@
 import pytest
 
-from statsjunk.fisher import fisher_z, fisher_z_ci, inverse_fisher_z
+from statsjunk.correlation.fisher import fisher_z, fisher_z_ci, inverse_fisher_z
 
 
 def test_fisher_z_of_zero_is_zero():

@@ -24,17 +24,21 @@ print(result.r, result.pvalue)
 
 ## What's here
 
-- `correlation` — Pearson correlation, with confidence intervals, and a summary-statistics variant
-  (`r`, `n`) for when the raw arrays aren't available.
-- `regression` — simple linear regression with slope diagnostics.
-- `multiple_regression` — ordinary least squares multiple linear regression, with standardized
-  coefficients and variance inflation factors.
-- `spatial` — global Moran's I spatial autocorrelation.
-- `elections` — Laakso-Taagepera effective number of parties/candidates.
-- `fisher` — Fisher z-transformation, used internally by `correlation` and available standalone.
-- `samplesize` — a Python port of [`pmsampsize`](https://cran.r-project.org/package=pmsampsize), for
-  minimum sample size calculations when developing continuous, binary, or survival outcome prediction
-  models (Riley et al. 2019, 2020).
+One folder per statistical domain, one module per technique inside it. Everything is also
+re-exported from the top-level `statsjunk` package, so `from statsjunk import compute_pearson_correlation`
+always works regardless of where a function actually lives.
+
+- `correlation` — `pearson`: Pearson correlation, with confidence intervals, and a
+  summary-statistics variant (`r`, `n`) for when the raw arrays aren't available. `fisher`: the
+  Fisher z-transformation used internally by `pearson`, also usable standalone.
+- `regression` — `simple`: simple linear regression with slope diagnostics. `multiple`: ordinary
+  least squares multiple linear regression, with standardized coefficients and variance inflation
+  factors.
+- `spatial` — `morans_i`: global Moran's I spatial autocorrelation.
+- `elections` — `laakso_taagepera`: effective number of parties/candidates.
+- `samplesize` — a Python port of [`pmsampsize`](https://cran.r-project.org/package=pmsampsize)
+  (`binary`, `continuous`, `survival`), for minimum sample size calculations when developing a
+  prediction model (Riley et al. 2019, 2020).
 
 ## Developing
 

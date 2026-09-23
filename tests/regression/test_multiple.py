@@ -1,7 +1,7 @@
 import numpy as np
 import pytest
 
-from statsjunk.multiple_regression import compute_multiple_regression
+from statsjunk.regression.multiple import compute_multiple_regression
 
 
 def _named(result):
