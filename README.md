@@ -2,6 +2,8 @@
 
 A collection of statistical odds and ends.
 
+Full documentation: https://outliersanalytics.github.io/statsjunk/
+
 Framework-free Python functions for common statistical tasks — correlation, regression,
 spatial autocorrelation, electoral fragmentation indices, and (soon) sample size
 calculations. Every function takes plain arrays and returns a typed [Pydantic](https://docs.pydantic.dev/)

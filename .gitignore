@@ -18,6 +18,7 @@ env/
 dist/
 build/
 *.egg-info/
+site/
 
 # Environment / secrets
 .env
